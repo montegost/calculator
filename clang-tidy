@@ -1,0 +1,22 @@
+Checks: >
+  clang-diagnostic-*,
+  clang-analyzer-*,
+  modernize-*,
+  performance-*,
+  readability-*,
+  bugprone-*,
+  -modernize-use-trailing-return-type,
+  -readability-magic-numbers,
+
+HeaderFilterRegex: '.*'
+
+CheckOptions:
+  # modernize
+  - key:   modernize-loop-convert.MinConfidence
+    value: reasonable
+  - key:   modernize-use-nullptr.NullMacros
+    value: 'NULL'
+
+  # performance
+  - key:   performance-move-const-arg.CheckTriviallyCopyableMove
+    value: true
