@@ -12,17 +12,15 @@ struct Task {
 
 bool parse( int argc, char* argv[], struct Task* task )
 {
-     static struct option long_options[] = {
-          { "first", required_argument, nullptr, 'f' },
-          { "second", required_argument, nullptr, 's' },
-          { "operation", required_argument, nullptr, 'w' },
-          { nullptr, 0, nullptr, 0 } };
+     static struct option long_options[] = { { "first", required_argument, nullptr, 'f' },
+                                             { "second", required_argument, nullptr, 's' },
+                                             { "operation", required_argument, nullptr, 'w' },
+                                             { nullptr, 0, nullptr, 0 } };
 
      int opt;
      int option_index = 0;
 
-     while( ( opt = getopt_long( argc, argv, "f:s:w:", long_options,
-                                 &option_index ) ) != -1 )
+     while( ( opt = getopt_long( argc, argv, "f:s:w:", long_options, &option_index ) ) != -1 )
      {
           switch( opt )
           {
@@ -58,12 +56,9 @@ bool check_int( const char* str )
 
 bool check_operation( const char* operation )
 {
-     return ( strcmp( operation, "addition" ) == 0 ||
-              strcmp( operation, "subtraction" ) == 0 ||
-              strcmp( operation, "multiplication" ) == 0 ||
-              strcmp( operation, "division" ) == 0 ||
-              strcmp( operation, "power" ) == 0 ||
-              strcmp( operation, "factorial" ) == 0 );
+     return ( strcmp( operation, "addition" ) == 0 || strcmp( operation, "subtraction" ) == 0 ||
+              strcmp( operation, "multiplication" ) == 0 || strcmp( operation, "division" ) == 0 ||
+              strcmp( operation, "power" ) == 0 || strcmp( operation, "factorial" ) == 0 );
 }
 
 bool check( struct Task* task )
@@ -85,8 +80,9 @@ bool check( struct Task* task )
 
      if( !check_operation( task->operation ) )
      {
-          printf( "Invalid value for --operation. Allowed: addition, subtraction, "
-                  "multiplication, division, power, factorial.\n" );
+          printf(
+               "Invalid value for --operation. Allowed: addition, subtraction, "
+               "multiplication, division, power, factorial.\n" );
           return false;
      }
 
@@ -167,9 +163,10 @@ int main( int argc, char* argv[] )
 
      if( !parse( argc, argv, &task ) )
      {
-          printf( "Usage: %s --first <num> [--second <num>] --operation "
-                  "<addition|subtraction|multiplication|division|power|factorial.>\n",
-                  argv[ 0 ] );
+          printf(
+               "Usage: %s --first <num> [--second <num>] --operation "
+               "<addition|subtraction|multiplication|division|power|factorial.>\n",
+               argv[ 0 ] );
           return 1;
      }
 
@@ -184,10 +181,20 @@ int main( int argc, char* argv[] )
      }
 
      long firstValue = strtol( task.firstValue, nullptr, 10 );
-     long secondValue = strtol( task.secondValue, nullptr, 10 );
 
-     printf( "first = %ld, second = %ld, operation = %s, result = %ld\n", firstValue, secondValue,
-             task.operation, task.result );
+     if( task.secondValue != nullptr )
+     {
+          long secondValue = strtol( task.secondValue, nullptr, 10 );
+          printf( "first = %ld, second = %ld, operation = %s, result = %ld\n",
+                  firstValue,
+                  secondValue,
+                  task.operation,
+                  task.result );
+     }
+     else
+     {
+          printf( "first = %ld, operation = %s, result = %ld\n", firstValue, task.operation, task.result );
+     }
 
      return 0;
 }
