@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.25)
 project(calculator)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -22,6 +22,26 @@ FetchContent_MakeAvailable(math)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${math_SOURCE_DIR}/include
+    src
+)
+
+FetchContent_Declare(
+    json 
+    URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz)
+
+FetchContent_MakeAvailable(json)
+
+FetchContent_Declare(
+    spdlog
+    GIT_REPOSITORY https://github.com/gabime/spdlog.git
+    GIT_TAG        v1.17.0
+)
+
+FetchContent_MakeAvailable(spdlog)
+
+target_link_libraries(calculator PRIVATE
+    nlohmann_json::nlohmann_json
+    spdlog::spdlog
 )
 
 
@@ -62,8 +82,24 @@ find_program(CLANG_TIDY_EXE NAMES clang-tidy)
  
 if(CLANG_TIDY_EXE)
     set_target_properties(${PROJECT_NAME} PROPERTIES
-        CXX_CLANG_TIDY "${CLANG_TIDY_EXE};--config-file=${CMAKE_SOURCE_DIR}/clang-tidy"
+        CXX_CLANG_TIDY
+        "${CLANG_TIDY_EXE};--config-file=${CMAKE_SOURCE_DIR}/clang-tidy;-header-filter=${CMAKE_SOURCE_DIR}/src/.*"
     )
 else()
     message(WARNING "clang-tidy not found — static analysis disabled")
+endif()
+
+
+include(CTest)
+
+if(BUILD_TESTING)
+    FetchContent_Declare(
+        googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG        v1.17.0
+    )
+    FetchContent_MakeAvailable(googletest)
+
+    enable_testing()
+    add_subdirectory(tests)
 endif()
