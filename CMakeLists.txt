@@ -22,6 +22,26 @@ FetchContent_MakeAvailable(math)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${math_SOURCE_DIR}/include
+    src
+)
+
+FetchContent_Declare(
+    json 
+    URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz)
+
+FetchContent_MakeAvailable(json)
+
+FetchContent_Declare(
+    spdlog
+    GIT_REPOSITORY https://github.com/gabime/spdlog.git
+    GIT_TAG        v1.17.0
+)
+
+FetchContent_MakeAvailable(spdlog)
+
+target_link_libraries(calculator PRIVATE
+    nlohmann_json::nlohmann_json
+    spdlog::spdlog
 )
 
 
