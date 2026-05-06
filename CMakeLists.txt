@@ -88,3 +88,18 @@ if(CLANG_TIDY_EXE)
 else()
     message(WARNING "clang-tidy not found — static analysis disabled")
 endif()
+
+
+include(CTest)
+
+if(BUILD_TESTING)
+    FetchContent_Declare(
+        googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG        v1.17.0
+    )
+    FetchContent_MakeAvailable(googletest)
+
+    enable_testing()
+    add_subdirectory(tests)
+endif()
