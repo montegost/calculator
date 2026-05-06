@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug calculator (lldb)",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${command:cmake.launchTargetPath}",
+      "args": [
+        "{\"first\": 10, \"second\": 5, \"operation\": \"addition\"}"
+      ],
+      "cwd": "${workspaceFolder}",
+      "stopOnEntry": false,
+      "terminal": "integrated"
+    }
+  ]
+}

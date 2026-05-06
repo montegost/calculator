@@ -1,0 +1,18 @@
+{
+  "cmake.generator": "Ninja",
+  "cmake.buildDirectory": "${workspaceFolder}/build",
+  "cmake.buildBeforeRun": true,
+  "cmake.defaultVariants": {},
+  "cmake.ctest.testExplorerIntegrationEnabled": true,
+  "cmake.debugConfig": {
+    "type": "lldb",
+    "request": "launch",
+    "args": [
+      "{\"first\": 10, \"second\": 5, \"operation\": \"addition\"}"
+    ],
+    "cwd": "${workspaceFolder}"
+  },
+  "cmake.launchArgs": [
+    "{\"first\": 10, \"second\": 5, \"operation\": \"addition\"}"
+  ]
+}
